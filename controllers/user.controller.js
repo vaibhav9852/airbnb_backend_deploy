@@ -73,9 +73,9 @@ exports.verifyEmail = async (req, res) => {
     const genrateToken = (payload, secret, options) => {
       return jwt.sign(payload, secret)
     }
-
-    const token = genrateToken({ email: user.email }, JWT_SECRET, { expiresIn: '1h' });
-    res.status(200).json({ success: true, data: { name: user.name, email: user.email, verified: user.verified, role: user.role, userId: user._id },token });
+   
+    const newToken = genrateToken({ email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+    res.status(200).json({ success: true, data: { name: user.name, email: user.email, verified: user.verified, role: user.role, userId: user._id },token:newToken });
   } catch (error) {
     res.status(400).json({ success: false, message: 'Invalid or expired token' });
   }
@@ -88,6 +88,9 @@ exports.loginUser = async (req, res) => {
   } else {
     try {
       let user = await User.findOne({ email })
+       if( !user.verified){
+        return res.status(401).json({ success: false, messgae: 'User not verified'})
+       } 
       if (!user) {
         return res.status(401).json({ success: false, messgae: 'User not exist' })
       } else {
