@@ -45,13 +45,13 @@ app.use('/v1/auth',authRoute)
  connectToDB();
 
 
-//  cron.schedule('0 21 * * *', () => {  
-// 	//sendMailFromHotel() 
-//  updateHotelAvailable() 
-//   }, {  
-// 	scheduled: true,
-// 	timezone: "America/Sao_Paulo" 
-//   });  
+ cron.schedule('0 21 * * *', () => {  
+	//sendMailFromHotel() 
+ updateHotelAvailable() 
+  }, {  
+	scheduled: true,
+	timezone: "America/Sao_Paulo" 
+  });  
 
 app.listen(PORT)
 
