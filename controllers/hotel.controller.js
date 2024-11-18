@@ -60,7 +60,7 @@ exports.getHotels = async (req,res) =>{
     try{
 
         let page = parseInt(req.query.page) || 1
-        let limit = 4 
+        let limit = 8
         let offset = (page-1) * limit 
         let hotels = await Hotel.find().skip(offset).limit(limit) 
         res.status(200).json({success:true,data:hotels})  
