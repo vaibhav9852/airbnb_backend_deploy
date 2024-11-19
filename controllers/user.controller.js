@@ -118,7 +118,9 @@ exports.loginUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   const { id } = req.params
   const { name, email, password } = req.body
-
+    if(!id){
+      res.status(400).json({ success: false, messgae: 'id is required' })
+    }
   try {
     let { SALT_ROUND } = process.env;
     let hashPassword = await bcrypt.hash(password, +SALT_ROUND)
