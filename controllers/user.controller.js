@@ -19,7 +19,7 @@ exports.createUser = async (req, res) => {
         res.status(400).json({ success: false, message: 'User already exist' })
       } else {
         let { SALT_ROUND, JWT_SECRET } = process.env;
-        let hashPassword = await bcrypt.hash(password, +SALT_ROUND)
+        let hashPassword = await bcrypt.hash(password, +SALT_ROUND) 
         const genrateToken = (payload, secret, options) => {
           return jwt.sign(payload, secret, options)
         }
@@ -123,12 +123,13 @@ exports.updateUser = async (req, res) => {
     let { SALT_ROUND } = process.env;
     let hashPassword = await bcrypt.hash(password, +SALT_ROUND)
     let response = await User.findByIdAndUpdate(id, { name, email, password: hashPassword })
-    let validUser = await User.findById(id).select('-password')
-    return res.status(200).json({ success: true, user: validUser })
+    // let validUser = await User.findById(id).select('-password')
+    return res.status(200).json({ success: true, user: response }) 
   } catch (err) {
     res.status(500).json({ success: false, messgae: 'Internal server error' })
   }
 }
+
 
 exports.getUsers = async (req, res) => {
 
@@ -141,6 +142,7 @@ exports.getUsers = async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal server error while get users' })
   }
 }
+
 
 
 exports.deleteUser = async (req, res) => {
