@@ -10,7 +10,7 @@ exports.payment = async (req,res) =>{
      try{
       if(userId && hotelId && totalAmount){
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: +`${totalAmount}.00`,
+    amount: +totalAmount * 100, 
     currency: "INR",
     automatic_payment_methods: {
       enabled: true,
