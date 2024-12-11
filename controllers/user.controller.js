@@ -124,9 +124,9 @@ exports.updateUser = async (req, res) => {
   try {
     let { SALT_ROUND } = process.env;
     let hashPassword = await bcrypt.hash(password, +SALT_ROUND)
-    let response = await User.findByIdAndUpdate(id, { name, email, password: hashPassword })
-    // let validUser = await User.findById(id).select('-password')
-    return res.status(200).json({ success: true, user: response }) 
+    let response = await User.findByIdAndUpdate(id, { name, email, password: hashPassword }) 
+     let validUser = await User.findById(id).select('-password')
+    return res.status(200).json({ success: true, user: validUser }) 
   } catch (err) {
     res.status(500).json({ success: false, messgae: 'Internal server error' })
   }
